@@ -35,10 +35,13 @@
 						<table id="usersTable" class="table table-bordered table-striped">
 							<thead>
 								<tr>
-									<th>Username</th>
-									<th>Email</th>
-									<th>Phone</th>
-									<th>Status</th>
+									<th>Nama Anak</th>
+									<th>Alamat</th>
+									<th>Berat Badan</th>
+									<th>Tinggi Badan</th>
+									<th>Lingkar Kepala</th>
+									<th>Lingkar Lengan Atas</th>
+									<th>Lingkar Perut</th>
 									<th>Action</th>
 								</tr>
 							</thead>
