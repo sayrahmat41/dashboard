@@ -50,11 +50,11 @@
 									<tr>
 										<td><?= $row['nama_anak']?></td>
 										<td><?= $row['alamat']?></td>
-										<td><?= $row['berat_badan']?></td>
-										<td><?= $row['tinggi_badan']?></td>
-										<td><?= $row['lingkar_kepala']?></td>
-										<td><?= $row['lingkar_lengan_atas']?></td>
-										<td><?= $row['lingkar_perut']?></td>
+										<td><?= $row['berat_badan']?>kg</td>
+										<td><?= $row['tinggi_badan']?>cm</td>
+										<td><?= $row['lingkar_kepala']?>cm</td>
+										<td><?= $row['lingkar_lengan_atas']?>cm</td>
+										<td><?= $row['lingkar_perut']?>cm</td>
 										<td><a href="<?=base_url()?>/data/edit/<?=$row['id'] ?>" data-toggle="tooltip" data-placement="top" title="Edit Data"class="btn btn-xs btn-primary">edit</a>
 											<a href="<?=base_url()?>/data/delete/<?=$row['id'] ?>" data-toggle="tooltip" data-placement="top" title="Edit Data"class="btn btn-xs btn-danger">delete</a>
 										</td>

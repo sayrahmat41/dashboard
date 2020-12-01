@@ -44,7 +44,7 @@
 								<div class="input-group">
 									<input type="number" class="form-control" name="tinggi_badan" value="<?= set_value('tinggi_badan')?>" id="tinggi_badan" placeholder="Masukkan Tinggi Badan">
 									<div class="input-group-append">
-										<span class="input-group-text">kg</span>
+										<span class="input-group-text">cm</span>
 									</div>
 								</div>
 							</div>
@@ -53,7 +53,7 @@
 								<div class="input-group">
 									<input type="number" class="form-control" name="berat_badan" value="<?= set_value('berat_badan')?>" id="berat_badan" placeholder="Masukkan Berat Badan">
 									<div class="input-group-append">
-										<span class="input-group-text">cm</span>
+										<span class="input-group-text">kg</span>
 									</div>
 								</div>
 							</div>
