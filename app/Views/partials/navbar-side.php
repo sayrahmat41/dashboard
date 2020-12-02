@@ -17,12 +17,12 @@
                 <?php if (session()->get('profile_picture') !='' || session()->get('profile_picture') !=null):?>
                 <?=base_url()?>/<?= session()->get('profile_picture')?>
                 <?php else: ?>
-                 <?=base_url()?>/uploads/default/profiles/profile.png
-             <?php endif; ?>
-             "
-             class="img-circle elevation-2" alt="User Image">
-         </div>
-         <div class="info">
+                   <?=base_url()?>/uploads/default/profiles/profile.png
+               <?php endif; ?>
+               "
+               class="img-circle elevation-2" alt="User Image">
+           </div>
+           <div class="info">
             <a href="#" class="d-block"><?= session()->get('username')?></a>
         </div>
     </div>
@@ -31,8 +31,8 @@
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
-                 <li class="nav-item has-treeview">
+                   with font-awesome or any other icon font library -->
+                   <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -72,6 +72,7 @@
                         </li>
                     </ul>
                 </li>
+                <?php if(session()->get('role')=="admin"): ?>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cogs"></i>
@@ -89,9 +90,10 @@
                         </li>
                     </ul>
                 </li>
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
+            <?php endif ?>
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->
 </aside>

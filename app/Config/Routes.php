@@ -25,6 +25,7 @@ $routes->setAutoRoute(true);
  * Auth Controller
  */
 $routes->match(['get','post'],'auth', 'Auth::login');
+$routes->match(['get','post'],'auth', 'Auth::register');
 /*
  * User Controller
  */

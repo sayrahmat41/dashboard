@@ -13,8 +13,9 @@ class Auth extends BaseController
     /*
      * login Action
      */
-	public function login()
-	{
+
+    public function login()
+    {
         $this->init();
         if(session()->get('isLoggedIn')){
             return  redirect()->to(base_url());
@@ -62,8 +63,19 @@ class Auth extends BaseController
 
         }
 
-		return view('auth/login',$data);
-	}
+        return view('auth/login',$data);
+    }
+
+    public function register()
+    {
+        $this->init();
+        if(session()->get('isLoggedIn')){
+            return  redirect()->to(base_url());
+        }
+        $data=[];
+        helper(['form']);
+        return view('auth/register',$data);
+    }
     /*
     * Set user session
     */
@@ -74,6 +86,7 @@ class Auth extends BaseController
             'username'   => $userDetails['username'],
             'email'      => $userDetails['email'],
             'profile_picture'      => $userDetails['profile_picture'],
+            'role'      => $userDetails['role'],
             'isLoggedIn' => true
         ];
         session()->set($data);

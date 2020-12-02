@@ -6,7 +6,7 @@ class UsersModel extends Model{
     protected $table              = 'sys_users';
     protected $returnType         = 'array';
     protected $allowedFields      = ['username', 'email','phone','status','profile_picture','password',
-    'last_login','last_logout','last_accessed_ip','logins'
+    'last_login','last_logout','last_accessed_ip','logins','role'
 ];
 protected $useTimestamps      = true;
 protected $createdField       = 'created_at';

@@ -16,21 +16,21 @@ class Users extends BaseController
             return  redirect()->to(base_url().'/auth');
         }
         $data=[
-           'heading' =>'System Users',
-       ];
+         'heading' =>'System Users',
+     ];
         // first load the library breadcrumb
-       $make_bread = new Make_bread;
+     $make_bread = new Make_bread;
         // add the first crumb, the segment being added to the previous crumb's URL
-       $make_bread->add('System Users', 'users', TRUE);
+     $make_bread->add('System Users', 'users', TRUE);
         // now, let's store the output of the breadcrumb in a variable and show it  inside a view
-       $breadcrumb = $make_bread->output();
-       $data['breadcrumb'] =$breadcrumb;
-       $model = new  UsersModel();
-       $users = $model->findAll();
-       $data['users'] = $users;
+     $breadcrumb = $make_bread->output();
+     $data['breadcrumb'] =$breadcrumb;
+     $model = new  UsersModel();
+     $users = $model->findAll();
+     $data['users'] = $users;
 
-       return view('users/users',$data);
-   }
+     return view('users/users',$data);
+ }
     /*
     * Create New  Users Action
     */
@@ -93,6 +93,7 @@ class Users extends BaseController
                         'email'           => $this->request->getVar('email'),
                         'phone'           => $this->request->getVar('phone'),
                         'password'        => $this->request->getVar('password'),
+                        'role'     => "admin",
                         'profile_picture' => $fileNamePath
                     ];
 
@@ -106,7 +107,8 @@ class Users extends BaseController
                         'username' => $this->request->getVar('username'),
                         'email'    => $this->request->getVar('email'),
                         'phone'    => $this->request->getVar('phone'),
-                        'password' => $this->request->getVar('password')
+                        'password' => $this->request->getVar('password'),
+                        'role'     => "admin",
                     ];
 
                     $model->save($userData);
@@ -119,6 +121,90 @@ class Users extends BaseController
 
         }
         return view('users/create',$data);
+    }
+    public function register()
+    {
+        // first load the library breadcrumb
+        $make_bread = new Make_bread;
+        // add the first crumb, the segment being added to the previous crumb's URL
+        $make_bread->add('System Users', 'users', TRUE);
+        $make_bread->add('Create Users', 'create', TRUE);
+        // now, let's store the output of the breadcrumb in a variable and show it  inside a view
+        $breadcrumb = $make_bread->output();
+        $data=[
+            'heading' =>'Create New Users',
+        ];
+        $data['breadcrumb'] =$breadcrumb;
+        helper(['form']);
+
+        if ($this->request->getMethod()=='post'){
+            $rules = [
+                'username'         => 'required',
+                'email'            => 'required|valid_email|is_unique[sys_users.email]',
+                'phone'            => 'required|numeric|is_unique[sys_users.phone]',
+                'password'         => 'required',
+                'comfirm_password' => 'matches[password]',
+            ];
+
+            if(!$this->validate($rules)){
+                $data['validation'] = $this->validator;
+            }else{
+                if(is_uploaded_file($_FILES['profile_pic']['tmp_name'])){
+                    $file = $this->request->getFile('profile_pic');
+                    $fileSize = 8192; //
+                    $ext = ['png','jpg'];
+                    $imageSize = $file->getSize();
+                    $fileExt = $file->getExtension();
+                    if( $imageSize > $fileSize || !in_array($fileExt,$ext) ){
+                        $session = session();
+                        $session->setFlashdata('error', 'file size and extention not accepted ');
+                        return view('users/create',$data);
+                    }
+                    if($file->isValid() && !$file->hasMoved()){
+                        $year = date('Y');
+                        $month = date('M');
+                        $date = date('d');
+                        $fileUploadPath = './uploads/images/'.$year.'/'.$month.'/'.$date.'/';
+                        $fileName=$file->getRandomName();
+
+                        $file->move($fileUploadPath,$fileName);
+                        $databaseFilepath='/uploads/images/'.$year.'/'.$month.'/'.$date.'/';
+                        $fileNamePath = $databaseFilepath.$fileName;
+                    }
+                    $model = new UsersModel();
+                    $userData = [
+                        'username'        => $this->request->getVar('username'),
+                        'email'           => $this->request->getVar('email'),
+                        'phone'           => $this->request->getVar('phone'),
+                        'password'        => $this->request->getVar('password'),
+                        'role'        => "user",
+                        'profile_picture' => $fileNamePath
+                    ];
+
+                    $model->save($userData);
+                    $session = session();
+                    $session->setFlashdata('success', 'Successfully created new user');
+                    return redirect()->to(base_url().'/auth');
+                }else{
+                    $model = new UsersModel();
+                    $userData = [
+                        'username' => $this->request->getVar('username'),
+                        'email'    => $this->request->getVar('email'),
+                        'phone'    => $this->request->getVar('phone'),
+                        'password' => $this->request->getVar('password'),
+                        'role'     => "user",
+                    ];
+
+                    $model->save($userData);
+                    $session = session();
+                    $session->setFlashdata('success', 'Successfully created new user');
+                    return redirect()->to(base_url().'/auth');
+                }
+
+            }
+
+        }
+        return  redirect()->to(base_url().'/auth');
     }
 
     /*
@@ -228,42 +314,42 @@ class Users extends BaseController
         if ($this->request->getMethod()=='post') {
             $id = $this->request->getVar('user_id');
             if (is_uploaded_file($_FILES['new_profile_pic']['tmp_name'])) {
-               $file = $this->request->getFile('new_profile_pic');
+             $file = $this->request->getFile('new_profile_pic');
                  $fileSize = 15000; //
                  $ext = ['png','jpg'];
                  $imageSize = $file->getSize();
                  $fileExt = $file->getExtension();
                  if( $imageSize > $fileSize || !in_array($fileExt,$ext) ){
-                   $session->setFlashdata('error', 'file size and extention not accepted ');
-                   return  redirect()->to(base_url().'/users/profile/'.$id);
-               }
-               if($file->isValid() && !$file->hasMoved()){
-                   $year = date('Y');
-                   $month = date('M');
-                   $date = date('d');
-                   $fileUploadPath = './uploads/images/'.$year.'/'.$month.'/'.$date.'/';
-                   $fileName=$file->getRandomName();
+                     $session->setFlashdata('error', 'file size and extention not accepted ');
+                     return  redirect()->to(base_url().'/users/profile/'.$id);
+                 }
+                 if($file->isValid() && !$file->hasMoved()){
+                     $year = date('Y');
+                     $month = date('M');
+                     $date = date('d');
+                     $fileUploadPath = './uploads/images/'.$year.'/'.$month.'/'.$date.'/';
+                     $fileName=$file->getRandomName();
 
-                   $file->move($fileUploadPath,$fileName);
-                   $databaseFilepath='/uploads/images/'.$year.'/'.$month.'/'.$date.'/';
-                   $fileNamePath = $databaseFilepath.$fileName;
-                   $model = new UsersModel();
-                   $userData = [
-                       'id'              => $id,
-                       'profile_picture' => $fileNamePath
-                   ];
-                   $model->save($userData);
-                   $session->setFlashdata('success', 'Successfully change the profile picture');
-                   return  redirect()->to(base_url().'/users/profile/'.$id);
-               }else{
-                   $session->setFlashdata('error', 'File has been move somewhere try again');
-                   return  redirect()->to(base_url().'/users/profile/'.$id);
-               }
-           }
-           $session->setFlashdata('error', 'Please select the new profile picture');
-           return  redirect()->to(base_url().'/users/profile/'.$id);
-       }
-   }
+                     $file->move($fileUploadPath,$fileName);
+                     $databaseFilepath='/uploads/images/'.$year.'/'.$month.'/'.$date.'/';
+                     $fileNamePath = $databaseFilepath.$fileName;
+                     $model = new UsersModel();
+                     $userData = [
+                         'id'              => $id,
+                         'profile_picture' => $fileNamePath
+                     ];
+                     $model->save($userData);
+                     $session->setFlashdata('success', 'Successfully change the profile picture');
+                     return  redirect()->to(base_url().'/users/profile/'.$id);
+                 }else{
+                     $session->setFlashdata('error', 'File has been move somewhere try again');
+                     return  redirect()->to(base_url().'/users/profile/'.$id);
+                 }
+             }
+             $session->setFlashdata('error', 'Please select the new profile picture');
+             return  redirect()->to(base_url().'/users/profile/'.$id);
+         }
+     }
     /*
      * reset password
      */

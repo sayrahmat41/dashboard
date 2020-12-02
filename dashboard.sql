@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2020 at 07:38 AM
+-- Generation Time: Dec 02, 2020 at 10:19 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -104,16 +104,18 @@ CREATE TABLE `sys_users` (
   `created_by` int(11) DEFAULT 1 COMMENT 'default',
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_by` int(11) DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
+  `updated_at` datetime DEFAULT NULL,
+  `role` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `sys_users`
 --
 
-INSERT INTO `sys_users` (`id`, `username`, `email`, `phone`, `status`, `profile_picture`, `password`, `last_login`, `last_logout`, `last_accessed_ip`, `logins`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(13, 'test', 'test@gmail.com', '12345678', 1, '/uploads/images/2020/May/24/1590353371_43e4efcdd22419ec37b0.png', '$2y$10$MJgRd.iID3Q1Q1HMUjXMi./Q0uearXWRxbgNofh5vono745MEKbfC', '2020-12-02 10:23:20', '2020-12-01 02:19:47', '::1', 9, 1, '2020-05-24 15:49:31', NULL, '2020-12-02 10:23:20'),
-(23, 'rahmatsayfuddin', 'rdlsecurity2@mailinator.com', '08888888', 1, NULL, '$2y$10$DRDJWoifKfdMOIS3SVCY4OznERiWiwt57uNr/kBc9rgKz1qxquAIi', NULL, NULL, '0.0.0.0', 0, 1, '2020-12-01 00:53:07', NULL, '2020-12-01 00:53:07');
+INSERT INTO `sys_users` (`id`, `username`, `email`, `phone`, `status`, `profile_picture`, `password`, `last_login`, `last_logout`, `last_accessed_ip`, `logins`, `created_by`, `created_at`, `updated_by`, `updated_at`, `role`) VALUES
+(13, 'test', 'test@gmail.com', '12345678', 1, '/uploads/images/2020/May/24/1590353371_43e4efcdd22419ec37b0.png', '$2y$10$MJgRd.iID3Q1Q1HMUjXMi./Q0uearXWRxbgNofh5vono745MEKbfC', '2020-12-02 15:01:58', '2020-12-02 15:07:47', '::1', 10, 1, '2020-05-24 15:49:31', NULL, '2020-12-02 15:07:47', 'admin'),
+(23, 'rahmatsayfuddin', 'rdlsecurity2@mailinator.com', '08888888', 1, NULL, '$2y$10$DRDJWoifKfdMOIS3SVCY4OznERiWiwt57uNr/kBc9rgKz1qxquAIi', NULL, NULL, '0.0.0.0', 0, 1, '2020-12-01 00:53:07', NULL, '2020-12-01 00:53:07', 'user'),
+(24, 'testuser', 'testuser@gmail.com', '91371973', 1, NULL, '$2y$10$sdPLR4HCiFi9KvLQpXcy4utWzeobYo9yfNw5k8eLjKmOfv6X8ZOze', '2020-12-02 15:17:01', '2020-12-02 15:19:11', '::1', 1, 1, '2020-12-02 15:16:54', NULL, '2020-12-02 15:19:11', 'user');
 
 --
 -- Indexes for dumped tables
@@ -157,7 +159,7 @@ ALTER TABLE `sys_status`
 -- AUTO_INCREMENT for table `sys_users`
 --
 ALTER TABLE `sys_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
