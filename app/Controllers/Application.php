@@ -17,8 +17,8 @@ class Application extends BaseController
     /*
      * User Dashboard
      */
-	public function index()
-	{
+    public function index()
+    {
         if(!session()->get('isLoggedIn')){
             return  redirect()->to(base_url().'/auth');
         }
@@ -33,9 +33,11 @@ class Application extends BaseController
 
         $db =  db_connect();
         $userModel = new UsersTable($db);
-        $result = $userModel->getCount();
-        $data['count'] = $result;
-		return view('app/dashboard', $data);
-	}
+        // $result = $userModel->getCount();
+        $statData = $userModel->getData();
+        //$data['count'] = $result;
+        $data['statistic'] = $statData;
+        return view('app/dashboard', $data);
+    }
 
 }
