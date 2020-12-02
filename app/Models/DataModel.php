@@ -10,9 +10,27 @@ class DataModel extends Model{
 		'nama_anak' ,
 		'alamat',
 		'berat_badan',
+		'tinggi_badan',
 		'lingkar_lengan_atas',
 		'lingkar_kepala',
-		'lingkar_perut'
+		'lingkar_perut',
+		'hepatitis_b',
+		'polio',
+		'bcg',
+		'dtp',
+		'hib',
+		'pcv',
+		'rotavirus',
+		'influenza',
+		'campak',
+		'mmr',
+		'tifoid',
+		'hepatitis_a',
+		'varisela',
+		'hpv',
+		'japanese_encephalitis',
+		'dangue',
+
 	];
 
 }

@@ -21,7 +21,7 @@ class App extends BaseConfig
 	| environments.
 	|
 	*/
-	public $baseURL = 'http://localhost/ci_admin/public';
+	public $baseURL = 'http://localhost/dashboardupi/public';
 
 	/*
 	|--------------------------------------------------------------------------
